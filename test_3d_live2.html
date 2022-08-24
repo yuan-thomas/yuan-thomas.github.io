@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src="hls.js"></script>
+        <script>
+            AFRAME.registerComponent('hls_stream', {
+                init: function(){
+                    var video = document.getElementById('webcam_stream');
+                    if(Hls.isSupported()) {
+                    var hls = new Hls();
+                    hls.loadSource('https://ip:port/path_to_hls_file/filename.m3u8');
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                        video.play();
+                    });
+                }
+                else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = 'http://localhost:3333/app/abc/llhls.m3u8';
+                    video.addEventListener('loadedmetadata',function() {
+                        video.play();
+                    });
+                    }
+                }
+            })
+          </script>
+    </head>   
+    <body>
+        <a-scene cursor="rayOrigin:mouse">
+            <a-assets>
+                <video id="webcam_stream" crossorigin="anonymous"></video>
+            </a-assets>
+
+            <a-video src="#webcam_stream" width="16" height="9" position="0 4.5 -20" hls_stream></a-video>
+
+          
+            <a-entity id="camera"  wasd-controls camera look-controls></a-entity>
+            <a-sky color="#111"></a-sky>
+        </a-scene>
+    </body>
+</html>
