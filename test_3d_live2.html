@@ -1,41 +1,70 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-        <script src="hls.js"></script>
-        <script>
-            AFRAME.registerComponent('hls_stream', {
-                init: function(){
-                    var video = document.getElementById('webcam_stream');
-                    if(Hls.isSupported()) {
-                    var hls = new Hls();
-                    hls.loadSource('https://ip:port/path_to_hls_file/filename.m3u8');
-                    hls.attachMedia(video);
-                    hls.on(Hls.Events.MANIFEST_PARSED,function() {
-                        video.play();
-                    });
-                }
-                else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = 'http://localhost:3333/app/abc/llhls.m3u8';
-                    video.addEventListener('loadedmetadata',function() {
-                        video.play();
-                    });
-                    }
-                }
-            })
-          </script>
-    </head>   
-    <body>
-        <a-scene cursor="rayOrigin:mouse">
-            <a-assets>
-                <video id="webcam_stream" crossorigin="anonymous"></video>
-            </a-assets>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://rawgit.com/oscarmarinmiro/aframe-video-controls/master/dist/aframe-video-controls.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
 
-            <a-video src="#webcam_stream" width="16" height="9" position="0 4.5 -20" hls_stream></a-video>
+<a-scene inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+    <a-box position="-10 -3 -6" rotation="45 45 45" color="red" id="play"
+         >
+    </a-box>
+    <video id="video" autoplay loop crossorigin="anonymous" muted controls src="http://localhost:3333/app/abc/llhls.m3u8">
+    </video>
+    <a-text  position="-8 3 -8" value="Hello, World!" color="red" scale="3 3 3"></a-text>
 
-          
-            <a-entity id="camera"  wasd-controls camera look-controls></a-entity>
-            <a-sky color="#111"></a-sky>
-        </a-scene>
-    </body>
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+    <a-entity distance="0.0" video-controls="src:#video"></a-entity>
+    <a-camera>
+        <a-cursor color="#FF0000"></a-cursor>
+    </a-camera>
+
+
+    <a-videosphere src="#video" rotation="0 180 0" style="background-color: antiquewhite"></a-videosphere>
+</a-scene>
+</body>
 </html>
+
+
+<script>
+    let video = document.getElementById('video');
+    if(Hls.isSupported()) {
+
+        var hls = new Hls({
+            debug: true
+        });
+        hls.loadSource('http://localhost:5080/LiveApp/streams/antmedia.m3u8');
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+            video.muted = true;
+            video.play();
+        });
+    }
+        // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+        // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+    // This is using the built-in support of the plain video element, without using hls.js.
+    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = 'http://localhost:5080/LiveApp/streams/antmedia.m3u8';
+        video.addEventListener('canplay',function() {
+            video.play();
+        });
+    }
+    let box = document.getElementById("play");
+    box.addEventListener("mouseenter",function(){
+        box.setAttribute("scale",{
+            x:3,
+            y:3,
+            z:3
+        })
+    });
+
+    box.addEventListener("click",function(){
+        box.setAttribute("color","blue");
+        video.pause();
+
+    });
+</script>
