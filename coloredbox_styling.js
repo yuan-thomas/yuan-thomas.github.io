@@ -43,5 +43,4 @@
 		}
 	}
 
-	customElements.define("com-sap-sample-coloredbox-styling", ColoredBoxStylingPanel);
-})();
+customElements.define("com-sap-sample-coloredbox-styling", ColoredBoxStylingPanel);

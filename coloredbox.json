@@ -4,7 +4,7 @@
 	"name": "Colored Box",
 	"description": "A colored box",
 	"newInstancePrefix": "ColoredBox",
-	"icon": "http://localhost:8000/icon.png",
+	"icon": "https://www.sample.com/customwidgets/coloredbox/icon.png",
 	"vendor": "SAP",
 	"eula": "",
 	"license": "",
@@ -12,21 +12,21 @@
 		{
 			"kind": "main",
 			"tag": "com-sap-sample-coloredbox",
-			"url": "http://localhost:8000/coloredbox.js",
+			"url": "https://www.sample.com/customwidgets/coloredbox/coloredbox.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
 		{
 			"kind": "styling",
 			"tag": "com-sap-sample-coloredbox-styling",
-			"url": "http://localhost:8000/coloredbox_styling.js",
+			"url": "https://www.sample.com/customwidgets/coloredbox/coloredbox_styling.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
 		{
 			"kind": "builder",
 			"tag": "com-sap-sample-coloredbox-builder",
-			"url": "http://localhost:8000/coloredbox_builder.js",
+			"url": "https://www.sample.com/customwidgets/coloredbox/coloredbox_builder.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		}
@@ -40,7 +40,7 @@
 		"opacity": {
 			"type": "number",
 			"description": "Opacity",
-			"default": 0.3
+			"default": 1
 		},
 		"width": {
 			"type": "integer",
