@@ -43,4 +43,6 @@
 		}
 	}
 
-customElements.define("com-sap-sample-coloredbox-styling", ARViewerStylingPanel);
+        customElements.define("com-sap-sample-coloredbox-styling", ARViewerStylingPanel);
+
+})();
