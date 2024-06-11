@@ -7,8 +7,15 @@
 	class ARViewer extends HTMLElement {
 		constructor() {
 			super(); 
-			let shadowRoot = this.attachShadow({mode: "open"});
+			
+	        this._shadowRoot = this.attachShadow({ mode: 'open' })
+	        this._shadowRoot.appendChild(template.content.cloneNode(true))
 
+	        this._root = this._shadowRoot.getElementById('root')
+
+	        this._props = {}
+
+	        this.render()
 
 		}
 	}
