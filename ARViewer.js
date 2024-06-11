@@ -15,8 +15,6 @@
 
 	        this._props = {}
 
-	        this.render()
-
 		}
 	}
 
